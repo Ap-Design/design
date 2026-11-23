@@ -54,6 +54,7 @@
       background: #fff;
       color: #000;
       font: 400 16px/1.38 var(--body);
+      overflow-x: clip;
     }
 
     /* Section Navigation */
@@ -62,10 +63,10 @@
       top: 0;
       z-index: 50;
       width: 100%;
-      max-width: 1440px;
+      max-width: none;
       height: 48px;
       margin: 0 auto;
-      padding: 0 3.3%;
+      padding: 0 max(3.3%, calc((100% - 1440px) / 2 + 47.52px));
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -137,7 +138,7 @@
       color: var(--grey);
       text-decoration: none;
       white-space: nowrap;
-      transition: color 0.18s ease;
+      transition: color 0.12s ease;
     }
 
     .deck-nav .links a:hover,
@@ -178,6 +179,10 @@
     .deck-nav .social-link:hover,
     .deck-nav .social-link:focus-visible {
       color: var(--blue);
+    }
+
+    .nav-toggle {
+      display: none;
     }
 
     h1,
@@ -241,9 +246,58 @@
     }
 
     @supports (content-visibility: auto) {
-      .s:nth-of-type(n+4) {
+      .s:nth-of-type(n+5) {
         content-visibility: auto;
         contain-intrinsic-size: auto 56.25vw;
+      }
+    }
+
+    @media (min-width: 1441px) {
+      .about,
+      .svc {
+        overflow: visible;
+        border-bottom: none;
+      }
+
+      .about::before,
+      .svc::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 100vw;
+        transform: translateX(-50%);
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .about::before {
+        background: linear-gradient(
+          90deg,
+          var(--blue) 0,
+          var(--blue) calc(50% - 120px),
+          var(--cream) calc(50% - 120px),
+          var(--cream) 100%
+        );
+      }
+
+      .svc::before {
+        background: linear-gradient(
+          90deg,
+          var(--brown) 0,
+          var(--brown) calc(50% - 120px),
+          var(--lb) calc(50% - 120px),
+          var(--lb) 100%
+        );
+      }
+
+      .about .l,
+      .about .r,
+      .svc .l,
+      .svc .r {
+        position: relative;
+        z-index: 1;
       }
     }
 
@@ -446,7 +500,7 @@
       position: absolute;
       left: 1.17cqw;
       top: 0;
-      width: 426.25px;
+      width: 443px;
       max-width: 34cqw;
     }
 
@@ -1186,7 +1240,7 @@
       position: absolute;
       left: 36cqw;
       top: 12.75cqw;
-      width: 61.62cqw;
+      width: 890px;
     }
 
     /* 13. Solution ideas */
@@ -1272,6 +1326,7 @@
       font-size: 1.72cqw;
       line-height: 1.35;
       color: var(--grey);
+      width: 550px;
     }
 
     .th .left b.gr {
@@ -1386,9 +1441,15 @@
       gap: 2.5cqw;
     }
 
+    .val .wcard:nth-child(1) {
+      margin-left: 40px;
+      width: 668px;
+    }
+
     .val .wcard.bcard {
       align-items: flex-start;
       padding: 2.4cqw 2.8cqw 2cqw;
+      margin-left: 40px;
     }
 
     .val .wcard.bcard .ic {
@@ -1408,23 +1469,32 @@
     .lf {
       padding: 3.6cqw 3.3cqw;
       display: grid;
-      grid-template-columns: 36.5cqw 23.8cqw 1fr;
-      gap: 3.2cqw;
+      grid-template-columns: 26.5cqw 25cqw 1fr;
+      gap: 2.6cqw;
       align-items: start;
     }
 
     .lf h2 {
-      font-size: 9.1cqw;
+      font-size: 7.8cqw;
       line-height: 0.84;
     }
 
     .lf .col2,
     .lf .col3 {
-      margin-top: 13.1cqw;
+      margin-top: 4cqw;
+    }
+
+    .lf .lab {
+      font-size: 2.2cqw;
+      margin-bottom: 1.2cqw;
+    }
+
+    .lf .col2 .lab {
+      padding-left: 0;
     }
 
     .lf .rot-wrap {
-      width: 21.5cqw;
+      width: 100%;
       aspect-ratio: 695 / 1000;
       position: relative;
       overflow: hidden;
@@ -1438,7 +1508,8 @@
     }
 
     .lf .col3 img {
-      width: 29.5cqw;
+      width: 100%;
+      height: auto;
     }
 
     /* 19. High-fidelity wireframes */
@@ -1520,6 +1591,7 @@
       left: 39.3cqw;
       top: 3.8cqw;
       right: 10cqw;
+      padding-left: 20px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4cqw;
@@ -1536,7 +1608,8 @@
       position: absolute;
       left: 33.3cqw;
       top: 12.5cqw;
-      width: 93.4cqw;
+      width: 1200px;
+      margin-left: 20px;
       max-width: none;
     }
 
@@ -1555,7 +1628,7 @@
       font-size: 1.68cqw;
       line-height: 1.34;
       color: var(--grey);
-      max-width: 19em;
+      width: 550px;
     }
 
     .ip .right {
@@ -1623,10 +1696,18 @@
     .s.runner-slide {
       aspect-ratio: auto;
       min-height: 0;
+      max-width: none;
+      width: 100%;
       overflow: visible;
       background: var(--cream);
       border-top: 1px solid #eee;
       border-bottom: none;
+      padding: 0;
+    }
+
+    .runner-inner {
+      max-width: 1440px;
+      margin: 0 auto;
       padding: 36px 3.3% 44px;
     }
 
@@ -1760,13 +1841,352 @@
       color: #fff;
     }
 
+    /* Microanimations (zero-dependency, GPU-composited, LCP-safe) */
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes star-spin {
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes shape-rise {
+        from { translate: 0 14px; }
+        to { translate: 0 0; }
+      }
+
+      @keyframes dot-pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.45); opacity: 0.55; }
+      }
+
+      /* Animated nav underline (active item only, crisp & lag-free) */
+      .deck-nav .links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: var(--blue);
+        opacity: 0;
+        transform: scaleX(0.6);
+        transform-origin: center;
+        transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.14s ease;
+      }
+
+      .deck-nav .links a.is-active::after {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+
+      /* Above-the-fold Cover & Name (transform-only so FCP/LCP stay instant) */
+      .cover .star svg {
+        animation: star-spin 28s linear infinite;
+      }
+
+      .cover .star:hover svg {
+        animation-duration: 7s;
+      }
+
+      .cover .shapes i {
+        transform-origin: bottom center;
+        animation: shape-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), filter 0.22s ease;
+      }
+
+      .cover .shapes i:hover {
+        transform: scaleY(1.38) scaleX(1.02);
+        filter: brightness(1.06);
+      }
+
+      .cover .shapes i:nth-child(2) { animation-delay: 80ms; }
+      .cover .shapes i:nth-child(3) { animation-delay: 160ms; }
+
+      .cm .eyebrow i {
+        animation: dot-pulse 2.6s ease-in-out infinite;
+      }
+
+      .dc .star svg {
+        animation: star-spin 32s linear infinite reverse;
+      }
+
+      /* Interactive hover micro-feedback */
+      .svc .row {
+        transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+      }
+
+      .svc .row b {
+        transition: color 0.2s ease;
+      }
+
+      .up .ava {
+        transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .up article:hover .ava {
+        transform: scale(1.04);
+      }
+
+      .jr-p {
+        transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, opacity 0.45s ease;
+      }
+
+      .us .it .ic {
+        transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .us .it:hover .ic {
+        transform: translateY(-2px) scale(1.08);
+      }
+
+      .hf .zoom-circle {
+        transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.55s ease, box-shadow 0.38s ease;
+      }
+
+      /* Scroll-triggered section reveals */
+      html.anim-ready .about .l::before {
+        transform: translateX(28px);
+        transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      html.anim-ready .about.is-in .l::before {
+        transform: translateX(0);
+      }
+
+      html.anim-ready .about .r p,
+      html.anim-ready .cm .copy,
+      html.anim-ready .pd .txt p,
+      html.anim-ready .pd .box,
+      html.anim-ready .tm .left,
+      html.anim-ready .tm .ck li,
+      html.anim-ready .dc .illu,
+      html.anim-ready .ps .left,
+      html.anim-ready .ps .tb,
+      html.anim-ready .up article,
+      html.anim-ready .qb .left,
+      html.anim-ready .qb .shot,
+      html.anim-ready .si .left,
+      html.anim-ready .si .bullets,
+      html.anim-ready .si .shot,
+      html.anim-ready .us .it,
+      html.anim-ready .th .left,
+      html.anim-ready .th .callout .bar,
+      html.anim-ready .th .slack-wrap,
+      html.anim-ready .val .left,
+      html.anim-ready .lf .col2,
+      html.anim-ready .lf .col3,
+      html.anim-ready .hf .wf-crop,
+      html.anim-ready .ds .left,
+      html.anim-ready .ds .bullets,
+      html.anim-ready .ds .shot,
+      html.anim-ready .ip .left,
+      html.anim-ready .ip .right > div,
+      html.anim-ready .cn .ach,
+      html.anim-ready .cn .dot li {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      html.anim-ready .svc .row {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      html.anim-ready .cm .art {
+        opacity: 0;
+        transform: scale(0.98);
+        transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1) 120ms, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+      }
+
+      html.anim-ready .tm .card,
+      html.anim-ready .ps .hm,
+      html.anim-ready .hf .zoom-circle,
+      html.anim-ready .jr-ic {
+        opacity: 0;
+        transform: scale(0.92);
+        transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) 140ms, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 140ms;
+      }
+
+      html.anim-ready .tm .tr {
+        opacity: 0;
+        transform: translateX(30px);
+        transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 180ms, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+      }
+
+      html.anim-ready .dc .gbox {
+        opacity: 0;
+        transform-origin: bottom left;
+        transform: scale(0.94);
+        transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) 80ms, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+      }
+
+      html.anim-ready .jr-c {
+        opacity: 0;
+        transform: translateX(-14px);
+        transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      html.anim-ready .jr-p {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+
+      html.anim-ready .th .beam {
+        opacity: 0;
+        transition: opacity 0.55s ease 200ms;
+      }
+
+      html.anim-ready .th .slack-hl {
+        opacity: 0;
+        transform: scale(0.96);
+        transition: opacity 0.45s ease 300ms, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 300ms;
+      }
+
+      html.anim-ready .val .wcard {
+        opacity: 0;
+        transform: translateX(20px);
+        transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      /* Stagger delays */
+      html.anim-ready .svc.is-in .row:nth-child(2),
+      html.anim-ready .tm.is-in .ck li:nth-child(2),
+      html.anim-ready .up.is-in article:nth-child(2),
+      html.anim-ready .us.is-in .it:nth-child(2),
+      html.anim-ready .cn.is-in .dot li:nth-child(2) { transition-delay: 80ms; }
+
+      html.anim-ready .svc.is-in .row:nth-child(3),
+      html.anim-ready .tm.is-in .ck li:nth-child(3),
+      html.anim-ready .up.is-in article:nth-child(3),
+      html.anim-ready .us.is-in .it:nth-child(3),
+      html.anim-ready .cn.is-in .dot li:nth-child(3) { transition-delay: 160ms; }
+
+      html.anim-ready .svc.is-in .row:nth-child(4),
+      html.anim-ready .tm.is-in .ck li:nth-child(4) { transition-delay: 240ms; }
+
+      html.anim-ready .pd.is-in .box,
+      html.anim-ready .qb.is-in .shot,
+      html.anim-ready .si.is-in .bullets,
+      html.anim-ready .ds.is-in .bullets,
+      html.anim-ready .lf.is-in .col2,
+      html.anim-ready .val.is-in .wcard:nth-child(1),
+      html.anim-ready .ip.is-in .right > div:nth-child(1) { transition-delay: 90ms; }
+
+      html.anim-ready .si.is-in .shot,
+      html.anim-ready .ds.is-in .shot,
+      html.anim-ready .lf.is-in .col3,
+      html.anim-ready .val.is-in .wcard:nth-child(2),
+      html.anim-ready .ip.is-in .right > div:nth-child(2) { transition-delay: 180ms; }
+
+      html.anim-ready .jr.is-in .jr-c.c2 { transition-delay: 80ms; }
+      html.anim-ready .jr.is-in .jr-c.c3 { transition-delay: 160ms; }
+      html.anim-ready .jr.is-in .jr-c.c4 { transition-delay: 240ms; }
+      html.anim-ready .jr.is-in .jr-ic.g { transition-delay: 220ms; }
+      html.anim-ready .jr.is-in .jr-ic.b { transition-delay: 290ms; }
+      html.anim-ready .jr.is-in .jr-p.col1 { transition-delay: 200ms; }
+      html.anim-ready .jr.is-in .jr-p.col2 { transition-delay: 260ms; }
+      html.anim-ready .jr.is-in .jr-p.col3 { transition-delay: 320ms; }
+      html.anim-ready .jr.is-in .jr-p.col4 { transition-delay: 380ms; }
+
+      /* Active revealed states */
+      html.anim-ready .about.is-in .r p,
+      html.anim-ready .svc.is-in .row,
+      html.anim-ready .cm.is-in .copy,
+      html.anim-ready .cm.is-in .art,
+      html.anim-ready .pd.is-in .txt p,
+      html.anim-ready .pd.is-in .box,
+      html.anim-ready .tm.is-in .left,
+      html.anim-ready .tm.is-in .ck li,
+      html.anim-ready .tm.is-in .card,
+      html.anim-ready .tm.is-in .tr,
+      html.anim-ready .dc.is-in .gbox,
+      html.anim-ready .dc.is-in .illu,
+      html.anim-ready .ps.is-in .left,
+      html.anim-ready .ps.is-in .tb,
+      html.anim-ready .ps.is-in .hm,
+      html.anim-ready .up.is-in article,
+      html.anim-ready .jr.is-in .jr-c,
+      html.anim-ready .jr.is-in .jr-p,
+      html.anim-ready .jr.is-in .jr-ic,
+      html.anim-ready .qb.is-in .left,
+      html.anim-ready .qb.is-in .shot,
+      html.anim-ready .si.is-in .left,
+      html.anim-ready .si.is-in .bullets,
+      html.anim-ready .si.is-in .shot,
+      html.anim-ready .us.is-in .it,
+      html.anim-ready .th.is-in .left,
+      html.anim-ready .th.is-in .callout .bar,
+      html.anim-ready .th.is-in .slack-wrap,
+      html.anim-ready .th.is-in .beam,
+      html.anim-ready .th.is-in .slack-hl,
+      html.anim-ready .val.is-in .left,
+      html.anim-ready .val.is-in .wcard,
+      html.anim-ready .lf.is-in .col2,
+      html.anim-ready .lf.is-in .col3,
+      html.anim-ready .hf.is-in .wf-crop,
+      html.anim-ready .hf.is-in .zoom-circle,
+      html.anim-ready .ds.is-in .left,
+      html.anim-ready .ds.is-in .bullets,
+      html.anim-ready .ds.is-in .shot,
+      html.anim-ready .ip.is-in .left,
+      html.anim-ready .ip.is-in .right > div,
+      html.anim-ready .cn.is-in .ach,
+      html.anim-ready .cn.is-in .dot li {
+        opacity: 1;
+        transform: none;
+      }
+
+      .svc .row:hover,
+      html.anim-ready .svc.is-in .row:hover {
+        transform: translateX(6px);
+        transition-delay: 0ms;
+      }
+
+      .svc .row:hover b {
+        color: var(--blue);
+      }
+
+      .jr-p:hover,
+      html.anim-ready .jr.is-in .jr-p:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition-delay: 0ms;
+      }
+
+      .hf .zoom-circle:hover,
+      html.anim-ready .hf.is-in .zoom-circle:hover {
+        transform: scale(1.04);
+        box-shadow: 0 0.7cqw 2.4cqw rgba(0, 0, 0, 0.16);
+        transition-delay: 0ms;
+      }
+
+      /* Highlighter pen sweep in Conclusion */
+      html.anim-ready .cn .ach mark {
+        background: linear-gradient(var(--mark), var(--mark)) no-repeat 0 0;
+        background-size: 0% 100%;
+        transition: background-size 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      html.anim-ready .cn.is-in .ach mark {
+        background-size: 100% 100%;
+      }
+
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(1) { transition-delay: 140ms; }
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(2) { transition-delay: 210ms; }
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(3) { transition-delay: 280ms; }
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(4) { transition-delay: 350ms; }
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(5) { transition-delay: 420ms; }
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(6) { transition-delay: 490ms; }
+      html.anim-ready .cn.is-in .ach mark:nth-of-type(7) { transition-delay: 560ms; }
+    }
+
     /* Mobile Fallback */
     @media (max-width: 760px) {
       .s {
         aspect-ratio: auto;
         min-height: auto;
         padding: 28px 20px;
-        font-size: 15px;
+        font-size: 16px;
+        border-bottom: none;
       }
 
       .t {
@@ -1838,9 +2258,7 @@
       }
 
       .name .globe {
-        max-width: 180px;
-        height: auto;
-        aspect-ratio: 470 / 1176;
+        display: none;
       }
 
       .name .nm {
@@ -1880,9 +2298,15 @@
         padding: 24px 20px;
       }
 
-      .about .r p,
+      .about .r p {
+        font-size: 16px;
+        line-height: 1.45;
+        max-width: none;
+      }
+
       .svc .row span {
         font-size: 15px;
+        line-height: 1.42;
       }
 
       .svc .row {
@@ -1922,6 +2346,17 @@
         margin-top: 18px;
       }
 
+      .ps .hm {
+        border-radius: 0;
+      }
+
+      .dc .illu {
+        width: 200px;
+        margin-top: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .cm .eyebrow {
         font-size: 13px;
         gap: 8px;
@@ -1945,45 +2380,372 @@
       .tm .ck {
         position: static;
         width: 100%;
+        max-width: none;
         margin-top: 16px;
+      }
+
+      .cm p,
+      .pd .txt p,
+      .tm .left p,
+      .dc .subp,
+      .ps .left p,
+      .si .left p,
+      .it p,
+      .th .left p,
+      .val .left p,
+      .ds .left p,
+      .ip .left p,
+      .cn .ach p {
+        font-size: 16px;
+        line-height: 1.45;
+        width: auto;
+        max-width: none;
+      }
+
+      .cm p,
+      .tm .left p,
+      .si .left p,
+      .th .left p,
+      .ds .left p,
+      .ip .left p,
+      .pd .txt p:first-of-type,
+      .ps .left p:first-of-type,
+      .val .left p.p1 {
+        margin-top: 16px;
+      }
+
+      .pd .txt p:last-of-type,
+      .ps .left p:last-of-type {
+        margin-top: 12px;
+      }
+
+      .dc .gbox {
+        padding: 18px 20px;
+        border-radius: 12px 12px 12px 0;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      .ck {
+        gap: 12px;
+      }
+
+      .ck li,
+      .tm .ck li {
+        padding-left: 24px;
+        font-size: 16px;
+        line-height: 1.42;
+      }
+
+      .ck li::before {
+        left: 3px;
+        top: 5px;
+        width: 6px;
+        height: 11px;
+        border-width: 0 2px 2px 0;
+      }
+
+      .dot {
+        padding-left: 20px;
+        gap: 10px;
+      }
+
+      .si .bullets,
+      .ds .bullets {
+        gap: 10px;
+        padding-left: 0;
+      }
+
+      .si .dot,
+      .ds .dot,
+      .cn .dot {
+        font-size: 16px;
+        line-height: 1.45;
+        gap: 10px;
+        padding-left: 20px;
+      }
+
+      .qb ol {
+        margin-top: 16px;
+        gap: 6px;
+        font-size: 16px;
+        line-height: 1.45;
+      }
+
+      .up {
+        gap: 20px;
+      }
+
+      .up .cols {
+        gap: 28px;
+      }
+
+      .up article {
+        grid-template-columns: 104px 1fr;
+        column-gap: 16px;
+        row-gap: 14px;
+      }
+
+      .up .ava {
+        width: 104px;
+        height: 104px;
+        border-radius: 10px;
+      }
+
+      .up .intro h3 {
+        font-size: 24px;
+        line-height: 1.1;
+      }
+
+      .up .desc {
+        font-size: 12px;
+        line-height: 1.4;
+        margin-top: 6px;
+      }
+
+      .up dl {
+        gap: 10px;
+      }
+
+      .up dt {
+        font-size: 17px;
+        line-height: 1.2;
+      }
+
+      .up dd {
+        font-size: 15px;
+        line-height: 1.35;
+        margin-top: 3px;
+      }
+
+      .up .gf h4 {
+        font-size: 17px;
+        line-height: 1.2;
+        margin: 0 0 6px;
+      }
+
+      .up .gf h4.fr {
+        margin-top: 14px;
+      }
+
+      .up .gf ul {
+        font-size: 15px;
+        line-height: 1.4;
+        padding-left: 18px;
+        gap: 6px;
       }
 
       .us .cols {
         padding-left: 0;
+        padding-right: 0;
+        margin-top: 20px;
+        gap: 16px;
+      }
+
+      .us .col {
+        gap: 16px;
+      }
+
+      .it {
+        gap: 12px;
+      }
+
+      .ic {
+        width: 32px;
+        height: 32px;
+      }
+
+      .val .left p.p2 {
+        margin-top: 14px;
+      }
+
+      .val .left p.p3 {
+        margin-top: 12px;
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .val .wcard,
+      .val .wcard:nth-child(1),
+      .val .wcard.bcard {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .ds .shot {
+        margin-left: 0;
+      }
+
+      .cn h3 {
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .cn .cols {
+        margin-top: 20px;
+        gap: 24px;
+      }
+
+      .lf h2 {
+        font-size: 48.75px;
+        width: auto;
+      }
+
+      .lf .lab,
+      .lf .col3 .lab {
+        font-size: 16px;
+        text-align: center;
+        width: auto;
       }
 
       .lf .col2,
       .lf .col3 {
         margin-top: 16px;
+        width: auto;
       }
 
       .lf .rot-wrap,
       .lf .col3 img {
         width: 100%;
+        height: auto;
+      }
+
+      .hf h2 {
+        padding-left: 0;
+        padding-top: 0;
+        margin-top: 0;
+      }
+
+      .hf .zoom-circle {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: min(260px, 75vw);
+        aspect-ratio: 1 / 1;
+        height: auto;
+        margin: 20px auto 0;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
       }
 
       .jr {
         overflow-x: auto;
+        padding-left: 0;
+        padding-top: 20px;
+        padding-bottom: 10px;
       }
 
       .jr-stage {
         min-width: 760px;
       }
 
+      .jr-t {
+        font-size: 48.75px;
+      }
+
+      .jr-p.col1,
+      .jr-p.col2,
+      .jr-p.col3,
+      .jr-p.col4 {
+        font-size: 10px;
+      }
+
       .deck-nav {
-        padding: 0 20px;
+        padding: 0 16px;
+        gap: 10px;
       }
 
       .deck-nav .brand span {
         display: none;
       }
 
-      .deck-nav .links {
-        gap: 16px;
+      .deck-nav .social-link {
+        margin-left: auto;
+        padding-left: 0;
+        border-left: none;
+        width: 36px;
+        height: 36px;
       }
 
-      .s.runner-slide {
-        padding: 24px 20px 32px;
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #000;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: color 0.18s ease, background-color 0.18s ease;
+      }
+
+      .nav-toggle:hover,
+      .nav-toggle:focus-visible {
+        color: var(--blue);
+        background: #f5f7ff;
+        outline: none;
+      }
+
+      .nav-toggle svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+
+      .nav-toggle .icon-close {
+        display: none;
+      }
+
+      .deck-nav.is-open .nav-toggle .icon-menu {
+        display: none;
+      }
+
+      .deck-nav.is-open .nav-toggle .icon-close {
+        display: block;
+      }
+
+      .deck-nav .links {
+        display: none;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        margin-left: 0;
+        padding: 8px 20px 14px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #e5e5e5;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      .deck-nav.is-open .links {
+        display: flex;
+      }
+
+      .deck-nav .links a {
+        height: 46px;
+        font-size: 15px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .deck-nav .links a:last-child {
+        border-bottom: none;
+      }
+
+      .deck-nav .links a.is-active::after {
+        display: none;
+      }
+
+      .s.runner-slide,
+      .pd .box,
+      .tm .tr,
+      .dc .star {
+        display: none;
       }
 
       .runner-touch-bar {
@@ -2025,7 +2787,7 @@
   <!-- Sticky Section Navigation -->
   <nav class="deck-nav" aria-label="Section navigation">
     <a class="brand" href="#cover">Oleksii Petrenko<span> | Senior design and technology professional</span></a>
-    <div class="links">
+    <div class="links" id="deck-links">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#case">Case Study</a>
@@ -2037,6 +2799,17 @@
         <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
       </svg>
     </a>
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="deck-links" aria-label="Toggle navigation menu">
+      <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
   </nav>
 
   <!-- Slide 1: Cover -->
@@ -2471,12 +3244,12 @@
     </div>
     <div class="right">
       <div>
-        <div class="lab b">Agent overview</div>
-        <img class="shot" src="/img/prototype-agent-overview.webp" alt="Agent overview prototype" width="1000" height="563" loading="lazy" decoding="async">
+        <div class="lab gr">Transporter overview</div>
+        <img class="shot" src="/img/transport.gif" alt="Agent overview prototype" width="1372" height="772" loading="lazy" decoding="async">
       </div>
       <div>
-        <div class="lab gr">Transporter overview</div>
-        <img class="shot" src="/img/prototype-transporter-overview.webp" alt="Transporter overview prototype" width="1000" height="563" loading="lazy" decoding="async">
+        <div class="lab b">Agent overview</div>
+        <img class="shot" src="/img/intial-price-agent.gif" alt="Transporter overview prototype" width="1372" height="772" loading="lazy" decoding="async">
       </div>
     </div>
     <span class="num">17</span>
@@ -2504,24 +3277,26 @@
 
   <!-- Interactive Footer Mini-Game -->
   <section class="s runner-slide" id="runner" aria-label="Interactive pixel runner mini-game">
-    <div class="runner-head">
-      <div class="runner-title-wrap">
-        <h2>Oleksii 8-Bit Edition</h2>
-        <span class="runner-meta"> &middot; Same controls as Chrome Dino</span>
+    <div class="runner-inner">
+      <div class="runner-head">
+        <div class="runner-title-wrap">
+          <h2>Oleksii 8-Bit Edition</h2>
+          <span class="runner-meta"> &middot; Same controls as Chrome Dino</span>
+        </div>
+        <div class="runner-actions">
+          <button type="button" class="runner-btn" id="runner-sound" aria-pressed="true">Sound: On</button>
+          <button type="button" class="runner-btn" id="runner-reset">Restart</button>
+        </div>
       </div>
-      <div class="runner-actions">
-        <button type="button" class="runner-btn" id="runner-sound" aria-pressed="true">Sound: On</button>
-        <button type="button" class="runner-btn" id="runner-reset">Restart</button>
+      <div class="runner-stage" id="runner-stage" tabindex="0" role="application" aria-label="Pixel runner game canvas. Press Space or Up arrow to jump, Down arrow to duck.">
+        <canvas class="runner-canvas" id="runner-canvas" width="960" height="240"></canvas>
       </div>
-    </div>
-    <div class="runner-stage" id="runner-stage" tabindex="0" role="application" aria-label="Pixel runner game canvas. Press Space or Up arrow to jump, Down arrow to duck.">
-      <canvas class="runner-canvas" id="runner-canvas" width="960" height="240"></canvas>
-    </div>
-    <div class="runner-touch-bar">
-      <div class="runner-hint">Controls: Space / &uarr; / W to Jump (tap canvas to start) &middot; &darr; / S to Duck or Fast-Drop</div>
-      <div class="runner-pad">
-        <button type="button" class="runner-btn" id="runner-duck">Duck (&darr;)</button>
-        <button type="button" class="runner-btn primary" id="runner-jump">Jump (Space)</button>
+      <div class="runner-touch-bar">
+        <div class="runner-hint">Controls: Space / &uarr; / W to Jump (tap canvas to start) &middot; &darr; / S to Duck or Fast-Drop</div>
+        <div class="runner-pad">
+          <button type="button" class="runner-btn" id="runner-duck">Duck (&darr;)</button>
+          <button type="button" class="runner-btn primary" id="runner-jump">Jump (Space)</button>
+        </div>
       </div>
     </div>
   </section>
@@ -2534,10 +3309,66 @@
         navLinks.map((link) => [link.getAttribute('href').slice(1), link])
       );
 
+      const navEl = document.querySelector('.deck-nav');
+      const navToggle = document.querySelector('.nav-toggle');
+      const setMenuOpen = (open) => {
+        if (!navEl || !navToggle) return;
+        navEl.classList.toggle('is-open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+      };
+
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          setMenuOpen(!navEl.classList.contains('is-open'));
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        if (navEl && navEl.classList.contains('is-open') && !navEl.contains(event.target)) {
+          setMenuOpen(false);
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navEl?.classList.contains('is-open')) {
+          setMenuOpen(false);
+          navToggle?.focus();
+        }
+      });
+
+      let activeId = null;
       const setActive = (id) => {
+        if (activeId === id) return;
+        activeId = id;
         navLinks.forEach((link) => {
           link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
         });
+      };
+
+      let scrollLockUntil = 0;
+      const releaseScrollLock = () => {
+        scrollLockUntil = 0;
+      };
+      if ('onscrollend' in window) {
+        window.addEventListener('scrollend', releaseScrollLock, { passive: true });
+      }
+
+      const observed = ['cover', 'about', 'services', 'case', 'personas', 'outcome']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+
+      const updateActiveFromScroll = () => {
+        if (performance.now() < scrollLockUntil || !observed.length) return;
+        const triggerY = (navEl?.offsetHeight || 48) + Math.min(140, window.innerHeight * 0.2);
+        let currentId = observed[0].id;
+        for (const el of observed) {
+          if (el.getBoundingClientRect().top <= triggerY) {
+            currentId = el.id;
+          } else {
+            break;
+          }
+        }
+        setActive(linkById.has(currentId) ? currentId : '');
       };
 
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -2547,8 +3378,13 @@
           if (!target) return;
 
           event.preventDefault();
-          const navHeight = document.querySelector('.deck-nav')?.offsetHeight || 0;
+          setMenuOpen(false);
+          target.classList.add('is-in');
+          const navHeight = navEl?.offsetHeight || 0;
           const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
+
+          scrollLockUntil = reducedMotion ? 0 : performance.now() + 900;
+          setActive(linkById.has(targetId) ? targetId : '');
 
           window.scrollTo({
             top: Math.max(0, top),
@@ -2558,33 +3394,39 @@
           if (history.pushState) {
             history.pushState(null, '', '#' + targetId);
           }
-
-          if (linkById.has(targetId)) {
-            setActive(targetId);
-          } else {
-            setActive('');
-          }
         });
       });
 
-      const observed = ['cover', 'about', 'services', 'case', 'personas', 'outcome']
-        .map((id) => document.getElementById(id))
-        .filter(Boolean);
+      let scrollTicking = false;
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (scrollTicking) return;
+          scrollTicking = true;
+          requestAnimationFrame(() => {
+            scrollTicking = false;
+            updateActiveFromScroll();
+          });
+        },
+        { passive: true }
+      );
+      updateActiveFromScroll();
 
-      if ('IntersectionObserver' in window && observed.length) {
-        const observer = new IntersectionObserver(
+      if (!reducedMotion && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('anim-ready');
+        const slides = document.querySelectorAll('.s:not(#cover):not(.name)');
+        const revealObserver = new IntersectionObserver(
           (entries) => {
-            const visible = entries
-              .filter((e) => e.isIntersecting)
-              .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-            if (visible.length) {
-              const id = visible[0].target.id;
-              setActive(linkById.has(id) ? id : '');
-            }
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                revealObserver.unobserve(entry.target);
+              }
+            });
           },
-          { rootMargin: '-15% 0px -55% 0px', threshold: [0.1, 0.35, 0.6] }
+          { rootMargin: '0px 0px -4% 0px', threshold: 0.01 }
         );
-        observed.forEach((el) => observer.observe(el));
+        slides.forEach((slide) => revealObserver.observe(slide));
       }
     })();
 
